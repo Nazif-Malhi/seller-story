@@ -1,0 +1,8 @@
+.conatinerOfApp{
+    margin-left: 260px;
+    transition: margin-left .2s ease-in;
+}
+
+.conatinerOfApp.inactiveconatinerOfApp{
+    margin-left: 75px;
+}
