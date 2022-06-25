@@ -14,7 +14,7 @@ import Pos from "./Components/Modals/Pos";
 function App() {
   const [inactive, setInactive] = useState(false);
   return (<div className="app">
-    <Router>
+    {/* <Router> */}
       <SideMenue
        onCollapse={(inactive) => {
         setInactive(inactive);
@@ -58,7 +58,7 @@ function App() {
       </Routes>
 
     </div>
-    </Router>
+    {/* </Router> */}
 
    </div>
   );

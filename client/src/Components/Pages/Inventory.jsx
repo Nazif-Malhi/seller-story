@@ -5,6 +5,8 @@ import {IoMdAdd} from 'react-icons/io';
 import {MdOutlineImportExport} from 'react-icons/md';
 import ImportingModals from '../Modals/ImportingModals';
 import { AddCategoryModal, AddProductModal } from '../Modals/InventoryModals';
+import { columnsHeader , columnsHeaderProduct, rows, rowsProduct} from '../Data/TableData';
+import EnhanceTable from '../Table/EnhanceTable';
 
 
 
@@ -49,7 +51,13 @@ export const Category = () => {
         />
       </div>
     </div>
-   
+     {/* Data Grid */}
+     <div className="table" style={{width:'96%' , margin:'2%'}}>
+        <EnhanceTable 
+        rows={rows}
+        columnsHeader = {columnsHeader}
+        />
+        </div>
   </>)
 }
 
@@ -91,6 +99,13 @@ export const Product = () => {
             onHide = {hideModalAdd}
             />
             </div>  
+        </div>
+         {/* Data Grid */}
+     <div className="table" style={{width:'96%' , margin:'2%'}}>
+        <EnhanceTable 
+        rows={rows}
+        columnsHeader = {columnsHeader}
+        />
         </div>
   </>)
 }
