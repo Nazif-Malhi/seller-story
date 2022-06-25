@@ -75,7 +75,7 @@ export const SubmitButton = styled.button`
 `;
 
 
-export const LogButton = styled(Link)`
+export const LogButton = styled.button`
   width: 100%;
   padding: 11px 40%;
   color: #fff;
