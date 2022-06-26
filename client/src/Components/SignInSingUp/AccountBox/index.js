@@ -6,10 +6,9 @@ import { AccountContext } from "./accountContext.js";
 import { SignupForm } from "./SignupForm.js";
 
 const BoxContainer = styled.div`
-  marginTop:10px;  
+  margin-top:2%;  
   width: 280px;
   min-height: 550px;
-  paddingTop:20px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -40,11 +39,11 @@ const BackDrop = styled(motion.div)`
   transform: rotate(60deg);
   top: -290px;
   left: -70px;
-  background: rgb(241, 196, 15);
+  background: #1E90FF;
   background: linear-gradient(
     58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
+    #1E90FF 20%,
+    #1565C0 100%
   );
 `;
 

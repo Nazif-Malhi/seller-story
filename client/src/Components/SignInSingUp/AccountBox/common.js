@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {Link} from 'react-router-dom';
 
 export const BoxContainer = styled.div`
   width: 100%;
@@ -18,14 +17,14 @@ export const FormContainer = styled.form`
 
 export const MutedLink = styled.a`
   font-size: 11px;
-  color: rgba(200, 200, 200, 0.8);
+  color: rgb(109, 109, 109);
   font-weight: 500;
   text-decoration: none;
 `;
 
 export const BoldLink = styled.a`
   font-size: 11px;
-  color: rgb(241, 196, 15);
+  color: #1E90FF;
   font-weight: 500;
   text-decoration: none;
   margin: 0 4px;
@@ -35,21 +34,21 @@ export const Input = styled.input`
   width: 100%;
   height: 42px;
   outline: none;
-  border: 1px solid rgba(200, 200, 200, 0.3);
+  border: 1px solid rgba(200, 200, 200, 0.7);
   padding: 0px 10px;
   border-bottom: 1.4px solid transparent;
   transition: all 200ms ease-in-out;
   backgroundColor: white;
   font-size: 12px;
   &::placeholder {
-    color: rgba(200, 200, 200, 1);
+    color: rgb(109, 109, 109);
   }
   &:not(:last-of-type) {
     border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
   }
   &:focus {
     outline: none;
-    border-bottom: 2px solid rgb(241, 196, 15);
+    border-bottom: 2px solid #1E90FF;
   }
 `;
 
@@ -63,35 +62,14 @@ export const SubmitButton = styled.button`
   border-radius: 100px 100px 100px 100px;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
-  background: rgb(241, 196, 15);
+  background: #1E90FF;
   background: linear-gradient(
     58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
+    #1E90FF 20%,
+    #1565C0 100%
   );
   &:hover {
     filter: brightness(1.03);
   }
 `;
 
-
-export const LogButton = styled(Link)`
-  width: 100%;
-  padding: 11px 40%;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 100px 100px 100px 100px;
-  cursor: pointer;
-  transition: all, 240ms ease-in-out;
-  background: rgb(241, 196, 15);
-  background: linear-gradient(
-    58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
-  );
-  &:hover {
-    filter: brightness(1.03);
-  }
-`;

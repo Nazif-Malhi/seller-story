@@ -25,19 +25,14 @@ export function SignupForm(props) {
   const [active, setActive] = useState('')
 
   const submitInfo = () => {
-
-    Axios.post("http://localhost:3001/api/insert",{
+    console.log(name + companyName)
+    Axios.post("http://localhost:8000/insert",{
       name:name,
       companyName:companyName,
       password:password,
       email:email,
       phone:phone,
-      role:role,
-      active:active
-    }).then(() => {
-      alert("successful Insert");
     });
-    console.log(companyName);
   };
   return (
     <BoxContainer>

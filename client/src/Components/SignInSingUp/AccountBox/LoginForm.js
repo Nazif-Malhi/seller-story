@@ -1,38 +1,84 @@
-import React, { useContext } from "react";
+//Impoorting Libraries
+
+import React, { useContext , useEffect , useState} from "react";
 import {
   BoldLink,
   BoxContainer,
   FormContainer,
   Input,
   MutedLink,
-  SubmitButton,
-  LogButton
+  SubmitButton
 } from "./common";
 import { Marginer } from "../Marginer";
 import { AccountContext } from "./accountContext";
+import Axios from 'axios';
+import {useNavigate } from 'react-router-dom';
 
 
 
-
-
-export function LoginForm(props) {
+export function LoginForm() {
   const { switchToSignup } = useContext(AccountContext);
+  const [authentication , setAuthentication] = useState([]);
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error , setError] = useState('');
+  
+  
+  useEffect(()=> {
+    Axios.get("http://localhost:8000/read").then((response) => {
+      setAuthentication(response.data);
+    });
+  }, []);
 
+  let navigate = useNavigate();
+
+  const validateAuthentication = () => {
+    
+    let tempPassword = '';
+    try {
+      tempPassword=authentication.find(x => x.name === name).password;
+      if(tempPassword !== ''){
+        if(tempPassword === password){
+          
+          navigate('/admin');
+          alert(error)
+          setError('');
+        }
+        else{
+          
+          navigate('/logs');
+          alert(error)
+          setError('error');
+        }
+      }
+      else{
+        alert(error)
+        setError('error');
+        
+      }
+    } catch (err) {
+      setError('error')
+    }
+    
+   
+    setName('');
+    setPassword('');
+  }
   return (
     <BoxContainer>
       <FormContainer>
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
+        <Input type="name" placeholder="Email" value = {name} onChange={(e) => {setName(e.target.value)}}  style={{borderBottom : error === 'error' ? '2px solid rgb(255, 0, 0)' : null}}/>
+        <Input type="password" placeholder="Password" value= {password} onChange={(e) => {setPassword(e.target.value)}} style={{marginTop:'5px'}}/>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <MutedLink href="#">Forget your password?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
-      <LogButton type="submit" to={"/"}>Signin</LogButton>
+      <SubmitButton type="submit" onClick={validateAuthentication}><i>Signin</i></SubmitButton>
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
-        Don't have an accoun?{" "}
+        <b><i>Don't have an account ?{" "}</i></b>
         <BoldLink href="#" onClick={switchToSignup}>
-          Signup
+          <b><i>Signup</i></b>
         </BoldLink>
       </MutedLink>
     </BoxContainer>
