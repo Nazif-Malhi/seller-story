@@ -20,10 +20,10 @@ import {MdOutlineAutorenew , MdOutlineHelpOutline} from 'react-icons/md'
 
 const inputStyle = {
     border: "1px solid rgb(185, 185, 185)",
-    height: "50px",
+    height: "40px",
     borderRadius: "4px",
-    width: "220px",
-    padding: "10px"
+    padding: "4px",
+    width:'100%'
 }
 
 // Data will be come through Map.Array => () to use in Select Box -> erase when Database attached
@@ -40,10 +40,11 @@ const names = [
     'Virginia Andrews',
     'Kelly Snyder',
     ];
-    // This is for uploading image's
-    function handleImage() {
-        console.log("Image")
-    }
+
+// This is for uploading image's
+function handleImage() {
+    console.log("Image")
+}
 
 
 
@@ -107,18 +108,18 @@ return (
                 <Row>
                     <Col xs={10} md={6}>
                         <h6>Name*</h6>
-                        <TextField id="outlined-basic" label="Type Category Name ..." variant="outlined" />
+                        <TextField id="outlined-basic" label="Type Category Name ..." variant="outlined" size='small' style={{width : '100%'}}/>
                     </Col>
                     <Col xs = {8} md = {6}>
                         <h6>Image</h6>
-                        <input type="file" name='myfile' onChange={handleImage()} className = "customInput"/>
+                        <input type="file" name='myfile' onChange={handleImage()} className = "customInput"  style={inputStyle}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs = {12} md = {12}>
                         <h6>Parent Category</h6>
-                    <FormControl sx={{ width: 300 }}>
-                        <InputLabel id="demo-multiple-chip-label" >Chip</InputLabel>
+                    <FormControl sx={{ width: 360 }} size = 'small'>
+                        <InputLabel id="demo-multiple-chip-label" >Select</InputLabel>
                         <Select
                         labelId="demo-multiple-chip-label"
                         id="demo-multiple-chip"
@@ -174,9 +175,9 @@ export const AddProductModal = ({
       // For DropDown -> Type
   const [type, setType] = useState('');
   //State for Show Hide on Standard
-  const [hide , setHide] = useState(false);
-  const onServicesShow = () => setHide(true);
-  const onServicesHide = () => setHide(false);
+  const [hide , setHide] = useState(true);
+  const onServicesShow = () => setHide(false);
+  const onServicesHide = () => setHide(true);
 
 
   const handleChangeTypeS = (event) => {
@@ -198,7 +199,6 @@ export const AddProductModal = ({
               disablePortal
               id="combo-box-demo"
               options={top100Films}
-              sx={{ width: 220 }}
               size = 'small'                
               renderInput={(params) => <TextField {...params} label="Movie" />}
             />       
@@ -209,7 +209,6 @@ export const AddProductModal = ({
               disablePortal
               id="combo-box-demo"
               options={top100Films}
-              sx={{ width: 220 }}
               size = 'small'                
               renderInput={(params) => <TextField {...params} label="Movie" />}
             />       
@@ -220,7 +219,6 @@ export const AddProductModal = ({
               disablePortal
               id="combo-box-demo"
               options={top100Films}
-              sx={{ width: 220 }}
               size = 'small'                
               renderInput={(params) => <TextField {...params} label="Movie" />}
             />       
@@ -242,7 +240,7 @@ export const AddProductModal = ({
       <Row className='topSpace'>
         <Col xs={6} md={4}>
           <h6>Product Type*</h6>
-          <FormControl1 sx={{ minWidth: 220 }} size="small">
+          <FormControl1 sx={{ width: '100%' }} size="small">
           <InputLabel id="demo-select-small">Type</InputLabel>
             <Select
               labelId="demo-select-small"
@@ -262,16 +260,15 @@ export const AddProductModal = ({
         </Col>
         <Col xs={6} md={4}>
         <h6>Product Name*</h6>
-            <TextField id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:220}}/>
+            <TextField id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:'100%'}} />
         </Col>
         <Col xs={6} md={4}>
           <h6>Product Code</h6>
-          <TextField id ="outlined-basics" label= "Product Code" variant='outlined' size='small'
+          <TextField id ="outlined-basics" label= "Product Code" variant='outlined' size='small' style={{width:'100%'}}
             InputProps={{
 
               style :{
                 paddingRight: '0px',
-                width:220
               },
               endAdornment: (
                 <InputAdornment position="end" >
@@ -291,7 +288,6 @@ export const AddProductModal = ({
             disablePortal
             id="combo-box-demo"
             options={top100Films}
-            sx={{ width: 220 }}
             size = 'small'
             renderInput={(params) => <TextField {...params} label="Movie" />}
           />
@@ -302,14 +298,13 @@ export const AddProductModal = ({
           disablePortal
           id="combo-box-demo"
           options={top100Films}
-          sx={{ width: 220 }}
           size = 'small'                
           renderInput={(params) => <TextField {...params} label="Movie" />}
         />              
         </Col>
         <Col xs={6} md={4}>
         <h6>Product Price*</h6>
-            <TextField type='number' id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:220}}/>
+            <TextField type='number' id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:'100%'}}/>
         </Col>
       </Row>
       <Row className='topSpace'>
@@ -319,7 +314,6 @@ export const AddProductModal = ({
           disablePortal
           id="combo-box-demo"
           options={top100Films}
-          sx={{ width: 220 }}
           size = 'small'                
           renderInput={(params) => <TextField {...params} label="Movie" />}
         />              
@@ -336,7 +330,6 @@ export const AddProductModal = ({
           disablePortal
           id="combo-box-demo"
           options={top100Films}
-          sx={{ width: 220 }}
           size = 'small'                
           renderInput={(params) => <TextField {...params} label="Movie" />}
         />              
@@ -355,7 +348,7 @@ export const AddProductModal = ({
             label="Description"
             multiline
             rows={4}
-            style = {{width:'88%'}}
+            style = {{width:'100%'}}
           />
           </Col>
         </Row>

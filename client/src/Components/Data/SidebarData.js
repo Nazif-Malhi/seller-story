@@ -7,8 +7,6 @@ import * as Io5Icons from "react-icons/io5";
 import * as GiIcons from "react-icons/gi";
 import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
-import * as HiIcons from 'react-icons/hi' ;
-
 
 export const SidebarData = [
     {
@@ -32,16 +30,6 @@ export const SidebarData = [
                 title: 'Product',
                 path: '/inventory/product',
                 icon: <MdIcons.MdProductionQuantityLimits/>
-            },
-            {
-                title: 'Adjustment',
-                path: '/inventory/adjustment',
-                icon: <HiIcons.HiAdjustments/>
-            },
-            {
-                title: 'Stock',
-                path: '/inventory/stock',
-                icon: <AiIcons.AiOutlineStock/>
             }
         ]
     },

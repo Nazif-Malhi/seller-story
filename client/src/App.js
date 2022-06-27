@@ -10,19 +10,29 @@ import { AddQuotation, QuotationList } from "./Components/Pages/Quotation";
 import { ReturnPurchase, ReturnSale } from "./Components/Pages/Return";
 import { Customer, Supplier } from "./Components/Pages/People";
 import Pos from "./Components/Modals/Pos";
+import AppContainer from "./Components/SignInSingUp/AppContainer";
 
 function App() {
   const [inactive, setInactive] = useState(false);
+  const [authenticationForm , setAuthenticationForm] = useState(false);
+
+  const handleRoute = () => {
+    setAuthenticationForm(true);
+  }
+ 
   return (<div className="app">
-    {/* <Router> */}
-      <SideMenue
+    <Router>
+    
+    {authenticationForm ? <><SideMenue
        onCollapse={(inactive) => {
         setInactive(inactive);
         }}
-      />
+      /> 
 
     <div className={`conatinerOfApp ${inactive ? "inactiveconatinerOfApp" : ""}`}>
       <Routes>
+        
+
         {/* Dashboard Route with the the path of URL  */}
         <Route  path={"/dashboard"} element={<Dashboard/>}/>
 
@@ -54,11 +64,16 @@ function App() {
 
          {/* Pos Route */}
          <Route path={"/pos"} element = {<Pos/>}/>
-
+        
       </Routes>
 
     </div>
-    {/* </Router> */}
+    </>: 
+    <Routes>
+      <Route path = {'/seller-story'} element = {<AppContainer handleRoute={handleRoute}/>}/>
+    </Routes>
+    }
+    </Router>
 
    </div>
   );

@@ -16,7 +16,7 @@ import {useNavigate } from 'react-router-dom';
 
 
 
-export function LoginForm() {
+export function LoginForm({handleRoute}) {
   const { switchToSignup } = useContext(AccountContext);
   const [authentication , setAuthentication] = useState([]);
   const [name, setName] = useState('');
@@ -39,28 +39,23 @@ export function LoginForm() {
       tempPassword=authentication.find(x => x.name === name).password;
       if(tempPassword !== ''){
         if(tempPassword === password){
-          
-          navigate('/admin');
-          alert(error)
+          navigate('/dashboard');
+          handleRoute();
           setError('');
         }
         else{
+          navigate('/seller-story');
           
-          navigate('/logs');
-          alert(error)
           setError('error');
         }
       }
       else{
-        alert(error)
         setError('error');
         
       }
     } catch (err) {
       setError('error')
     }
-    
-   
     setName('');
     setPassword('');
   }
@@ -68,16 +63,16 @@ export function LoginForm() {
     <BoxContainer>
       <FormContainer>
         <Input type="name" placeholder="Email" value = {name} onChange={(e) => {setName(e.target.value)}}  style={{borderBottom : error === 'error' ? '2px solid rgb(255, 0, 0)' : null}}/>
-        <Input type="password" placeholder="Password" value= {password} onChange={(e) => {setPassword(e.target.value)}} style={{marginTop:'5px'}}/>
+        <Input type="password" placeholder="Password" value= {password} onChange={(e) => {setPassword(e.target.value)}} style={{marginTop:'5px' , borderBottom : error === 'error' ? '2px solid rgb(255, 0, 0)' : null}}/>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <MutedLink href="#">Forget your password?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
       <SubmitButton type="submit" onClick={validateAuthentication}><i>Signin</i></SubmitButton>
       <Marginer direction="vertical" margin="1em" />
-      <MutedLink href="#">
+      <MutedLink >
         <b><i>Don't have an account ?{" "}</i></b>
-        <BoldLink href="#" onClick={switchToSignup}>
+        <BoldLink  onClick={switchToSignup}>
           <b><i>Signup</i></b>
         </BoldLink>
       </MutedLink>
