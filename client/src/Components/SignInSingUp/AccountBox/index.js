@@ -8,7 +8,7 @@ import { SignupForm } from "./SignupForm.js";
 const BoxContainer = styled.div`
   margin-top:2%;  
   width: 280px;
-  min-height: 550px;
+  min-height: 580px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -99,7 +99,7 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-export function AccountBox(props) {
+export function AccountBox({handleRoute}) {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
 
@@ -152,8 +152,8 @@ export function AccountBox(props) {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm />}
-          {active === "signup" && <SignupForm />}
+          {active === "signin" && <LoginForm handleRoute={handleRoute}/>}
+          {active === "signup" && <SignupForm  />}
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>

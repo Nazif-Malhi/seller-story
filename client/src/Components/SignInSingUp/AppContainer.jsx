@@ -10,10 +10,10 @@ const AppContaineri = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const AppContainer = () => {
+const AppContainer = ({handleRoute}) => {
     return (
         <AppContaineri>
-            <AccountBox/>
+            <AccountBox handleRoute = {handleRoute}/>
         </AppContaineri>
     )
 }
