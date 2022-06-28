@@ -11,25 +11,7 @@ import {
 import { Marginer } from "../Marginer";
 import { AccountContext } from "./accountContext.js";
 import validator from 'validator';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-function ActionAlerts() {
-  return (
-    <Stack sx={{ width: '100%' }} spacing={2}>
-      <Alert onClose={() => {}}>This is a success alert — check it out!</Alert>
-      <Alert
-        action={
-          <Button color="inherit" size="small">
-            UNDO
-          </Button>
-        }
-      >
-        This is a success alert — check it out!
-      </Alert>
-    </Stack>
-  );
-}
+
 
 export function SignupForm() {
   const { switchToSignin } = useContext(AccountContext);
@@ -97,7 +79,6 @@ export function SignupForm() {
       email:email,
       phone:phone,
     });
-    <ActionAlerts/>
     setPhoneError('');
     setName('')
     setCompanyName('');

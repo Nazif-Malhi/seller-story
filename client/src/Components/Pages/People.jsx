@@ -1,15 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Stack from '@mui/material/Stack';
 import ButtonR from '@mui/material/Button';
 import {IoMdAdd} from 'react-icons/io';
 import {MdOutlineImportExport} from 'react-icons/md';
 import ImportingModals from '../Modals/ImportingModals';
 import {AddPeopleModal } from '../Modals/PeopleModals';
+import Axios from 'axios';
+import EnhanceTable from '../Table/EnhanceTable';
+
+const columnsHeader = [
+  'Name',
+  'Email',
+  'phone',
+  'Address',
+  'State',
+  'City'
+]
 
 export const Customer = () => {
   const [showImport, setShowImport] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [rows, setRows] = useState([]);
 
+    useEffect(() =>{
+      Axios.get("http://localhost:8000/customer/read").then((response) => {
+        setRows(response.data);
+      });
+    }, [showAddModal]);
+   
     function hideModalImport(){
         setShowImport(false);
     }
@@ -40,6 +58,14 @@ export const Customer = () => {
         <AddPeopleModal
         show = {showAddModal}
         onHide = {hideModalAdd}
+        title = {'Add Customer'}
+        />
+        </div>
+         {/* Data Grid */}
+     <div className="table" style={{width:'96%' , margin:'2%'}}>
+        <EnhanceTable 
+        rows={rows}
+        columnsHeader = {columnsHeader}
         />
         </div>
   </>
@@ -49,7 +75,13 @@ export const Customer = () => {
 export const Supplier = () => {
   const [showImport, setShowImport] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [rows, setRows] = useState([]);
 
+    useEffect(() =>{
+      Axios.get("http://localhost:8000/supplier/read").then((response) => {
+        setRows(response.data);
+      });
+    }, [showAddModal]);
     function hideModalImport(){
         setShowImport(false);
     }
@@ -80,7 +112,15 @@ export const Supplier = () => {
         <AddPeopleModal
         show = {showAddModal}
         onHide = {hideModalAdd}
+        title = {'Add Supplier'}
         />
         </div>
+           {/* Data Grid */}
+          <div className="table" style={{width:'96%' , margin:'2%'}}>
+          <EnhanceTable 
+          rows={rows}
+          columnsHeader = {columnsHeader}
+          />
+          </div>
     </>)
 }

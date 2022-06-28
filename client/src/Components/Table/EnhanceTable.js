@@ -250,9 +250,10 @@ export default function EnhanceTable({
   }
 
   const getRows =()=>{
-    const column = Object.keys(rows[0]);
-    const newSlicedArray = column.slice(1); // get all  the data except first column
-    const getFirst = column.slice(0,1); // get the first column data to treat special
+    if(rows.length > 0){
+      const column = Object.keys(rows[0]);
+    const newSlicedArray = column.slice(2,column.length-1); // get all  the data except first column
+    const getFirst = column.slice(1,2); // get the first column data to treat special
     return (rowsPerPage > 0
       ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       : rows
@@ -264,12 +265,12 @@ export default function EnhanceTable({
               </StyledTableCell>
         {newSlicedArray.map((v)=> {
           return <StyledTableCell align="right">{data[v]}</StyledTableCell>
-          
         })}
         <StyledTableCell align="right"><CustomizedMenus/></StyledTableCell>
         </StyledTableRow>
       )
     })
+    }
   }
 
   return (<>
