@@ -11,7 +11,6 @@ export const AddPurchase = () => {
 }
 
 export const PurchaseList = () => {
-    return(
-        <div className="Purchase">Purchase List</div>
+    return(<></>
     )
 }
