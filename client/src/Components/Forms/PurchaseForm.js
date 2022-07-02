@@ -33,10 +33,10 @@ const PurchaseForm = () => {
     const [orderTax, setOrderTax]= useState(0.000);
     const [orderDiscount, setOrderDiscount]= useState(0.000);
     const [shippingCost, setShippingCost]= useState(0.000);
-    const [itemCost, setItemCost]=useState(0.000);
-    const [total, setTotal] = useState(0.000);
+    const [item, setItem]=useState(0.000);
     const [grandTotal, setGrandTotal] = useState(0.000);
     const [subTotal, setSubTotal] = useState(0);
+    const [note, setNote]= useState(''); 
 
     useEffect(()=> {
         Axios.get("http://localhost:8000/product/read").then((response) => {
@@ -47,11 +47,38 @@ const PurchaseForm = () => {
         });
       }, []);
 
+       // Saving data in Database
+
+    const submitInfo = () => {
+        Axios.post("http://localhost:8000/purchase/insert",{
+        value:value,
+        supplierName:supplierName,
+        purchaseStatus:purchaseStatus,
+        note:note,
+        orderTax:orderTax,
+        orderDiscount:orderDiscount,
+        shippingCost:shippingCost,
+        grandTotal:grandTotal,
+        rows:rows,
+      });
+      setValue(new Date());
+      setRows([]);
+      setName('');
+      setQty('');
+      setSupplierName('');
+      setPurchaseStatus('');
+      setOrderTax(0.000);
+      setOrderDiscount(0.000);
+      setShippingCost(0.000);
+      setItem(0.000);
+      setGrandTotal(0.000);
+      setSubTotal(0.000);
+      setNote('');
+      }
+
     const addRows = () => {
-        console.log(name);
         try {
-            let code=product.find(x => x.productName === name).productCode;
-            console.log(code);
+        let code=product.find(x => x.productName === name).productCode;
         var price=product.find(x => x.productName === name).price;
         var tax=product.find(x => x.productName === name).tax;
         let method=product.find(x => x.productName === name).method;
@@ -59,10 +86,10 @@ const PurchaseForm = () => {
         var newPrice = parseInt(price) * parseInt(qty)
         var newTax = (parseInt(newPrice) / 100) * parseInt(tax);
         if(method === 'Inclusive'){
-            tempSubTotal = parseInt(newTax) + parseInt(price);
+            tempSubTotal = parseInt(newTax) + parseInt(newPrice);
         }
         else{
-            tempSubTotal = parseInt(price) - parseInt(newTax);
+            tempSubTotal = parseInt(newPrice) - parseInt(newTax);
         }
         const rowsInput = {
             name:name,
@@ -70,27 +97,22 @@ const PurchaseForm = () => {
             qty:qty,
             price:price,
             tax:tax,
-            subTotal:tempSubTotal
+            subTotal:tempSubTotal,
         }
-        setRows([...rows,rowsInput])
-        finalCalculation();
-        console.log(rows);
+        setRows([...rows,rowsInput]);
         } catch (error) {
             console.log(error);
-
         }
     }
     const deleteTableRows = (index)=>{
        if(rows.length > 0){
-        console.log('come index')
-        console.log(index);
         const row = [...rows];
         row.splice(index, 1);
         setRows(row);
        }
    
    }
-   const changeOrderTax = (e) => {
+const changeOrderTax = (e) => {
     setOrderTax(e.target.value);
     finalCalculation();
 
@@ -105,23 +127,18 @@ const changeOrderShippingCost = (e) => {
     finalCalculation();
 }
 const finalCalculation = () => {
-    let tempItemCost = 0;
-    rows.map((value) => {
-       return tempItemCost += parseInt(value.price);
-    })
-    setItemCost(tempItemCost);
-    let tempSubTotal = 0;
-    rows.map((value) => {
-        return tempSubTotal += parseInt(value.subTotal);
-    })
+    setItem(rows.length);
+     let tempSubTotal = 0;
+    rows.forEach(value  => {
+         tempSubTotal += parseInt(value.subTotal);
+    });
     setSubTotal(tempSubTotal);
+
     let tempGrandTotal = 0;
-
-    let overAllDiscount =parseInt(subTotal) - (parseInt(subTotal) * (parseInt(orderDiscount) / 100));
-    var newTax = (parseInt(overAllDiscount) / 100) * parseInt(orderTax);
-
-    tempGrandTotal = parseInt(newTax) + overAllDiscount;
-    setGrandTotal(tempGrandTotal)
+     let overAllDiscount =parseInt(subTotal) - (parseInt(subTotal) * (parseInt(orderDiscount) / 100));
+     var newTax = (parseInt(overAllDiscount) / 100) * parseInt(orderTax);
+     tempGrandTotal = parseInt(newTax) + parseInt(overAllDiscount) + parseInt(shippingCost);
+     setGrandTotal(tempGrandTotal);
 }
   return (<>
   <Card>
@@ -168,7 +185,7 @@ const finalCalculation = () => {
                     labelId="demo-select-small"
                     id="demo-select-small"
                     label="product_type"
-                    onChange={(e) => setPurchaseStatus(e.target.value)} 
+                    onChange={(e, input) => setPurchaseStatus(input)} 
                     value = {purchaseStatus}
                     >
                     <MenuItem value={0}>Received</MenuItem>
@@ -201,12 +218,15 @@ const finalCalculation = () => {
                 </Col>
             </Row>
             <Row>
-            <Button variant="primary" style={{marginTop:'30px', marginBottom:'30px'}} onClick={() => {addRows()}}>Go somewhere</Button>
+            <Button variant="primary" style={{marginTop:'30px', marginBottom:'30px'}} 
+            onClick={() => {addRows()}}>
+            Add Product
+            </Button>
             </Row>
             <Row>
                 <h5>Order Table *</h5>
                 <div className="table" style={{width:'96%' , margin:'2%'}}>
-                <FormsTable rows = {rows} deleteTableRows={deleteTableRows}/>
+                <FormsTable rows = {rows} deleteTableRows={deleteTableRows} finalCalculation={finalCalculation}/>
                 </div>
             </Row>
             
@@ -219,10 +239,12 @@ const finalCalculation = () => {
                         multiline
                         rows={4}
                         style = {{width:'100%'}}
+                        value = {note}
+                        onChange = {(e)=> (setNote(e.target.value))}
                     />
                 </Col>
             </Row>
-            <Row>
+            <Row style={{marginTop:'20px'}}>
             <Col>
                 <TextField type='text' id="outlined-basic" label="Order Tax" variant="outlined" size="small" style={{width:'100%'}} onChange={(e)=>{changeOrderTax(e)}} value={orderTax}/>
             </Col>
@@ -235,7 +257,7 @@ const finalCalculation = () => {
             </Row>
         </Container>
     </Card.Text>
-    <Button variant="primary">Go somewhere</Button>
+    <Button variant="primary" onClick={submitInfo}>Add Purchase</Button>
   </Card.Body>
 </Card>
     <div className='ToalDescription' style={{paddingTop:'40px'}}>
@@ -249,7 +271,7 @@ const finalCalculation = () => {
                     </Col>
                     <Col>
                     <div style={styleOfRight}>
-                        {itemCost}
+                        {item}
                     </div>
                     </Col>
                 </Col>

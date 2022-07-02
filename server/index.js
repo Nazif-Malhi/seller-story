@@ -220,6 +220,97 @@ app.get('/supplier/read', async(req, res) => {
 })
 
 
+// Purchase
+const PurchaseModal = require("./Model/Purchase");
+
+
+app.post('/purchase/insert', async (req, res) =>{
+    const date = req.body.value
+    const supplier = req.body.supplierName
+    const purchaseStatus = req.body.purchaseStatus
+    const note = req.body.note
+    const orderTax = req.body.orderTax
+    const orderDiscount = req.body.orderDiscount
+    const shippingCost = req.body.shippingCost
+    const products = req.body.rows
+    const grandTotal = req.body.grandTotal
+
+    const purchase = new PurchaseModal({
+       date:date,
+       supplier:supplier,
+       purchaseStatus:purchaseStatus,
+       note:note,
+       orderTax:orderTax,
+       orderDiscount:orderDiscount,
+       shippingCost:shippingCost,
+       grandTotal:grandTotal,
+       products:products
+
+
+    });
+
+    try {
+        await purchase.save();
+        res.send('inserted Data');
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+app.get('/purchase/read', async(req, res) => {
+    PurchaseModal.find({},{date:1,supplier:1,purchaseStatus:1,orderTax:1,orderDiscount:1,shippingCost:1,grandTotal:1,__v:1},(err, result) => {
+        if(err) {
+            res.send(err);
+        }
+        res.send(result);
+    })
+})
+
+// Qoutation
+const QoutationModal = require("./Model/Qoutation");
+
+
+app.post('/qoutation/insert', async (req, res) =>{
+    const customer = req.body.customerName
+    const supplier = req.body.supplierName
+    const note = req.body.note
+    const orderTax = req.body.orderTax
+    const orderDiscount = req.body.orderDiscount
+    const shippingCost = req.body.shippingCost
+    const products = req.body.rows
+    const grandTotal = req.body.grandTotal
+
+    const qoutation = new QoutationModal({
+        customer:customer,
+       supplier:supplier,
+       note:note,
+       orderTax:orderTax,
+       orderDiscount:orderDiscount,
+       shippingCost:shippingCost,
+       grandTotal:grandTotal,
+       products:products
+
+
+    });
+
+    try {
+        await qoutation.save();
+        res.send('inserted Data');
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+app.get('/qoutation/read', async(req, res) => {
+    QoutationModal.find({},{customer:1,supplier:1,orderTax:1,orderDiscount:1,shippingCost:1,grandTotal:1,__v:1},(err, result) => {
+        if(err) {
+            res.send(err);
+        }
+        res.send(result);
+    })
+})
 
 // Running App
 app.listen(8000 , () => {
