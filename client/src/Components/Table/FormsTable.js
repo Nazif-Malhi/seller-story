@@ -1,4 +1,4 @@
-import react from 'react';
+import react, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -35,13 +35,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const FormsTable =({rows,deleteTableRows}) => {
-    
-    const p = () =>{
-        console.log('print');
-    }
+const FormsTable =({rows,deleteTableRows,finalCalculation}) => {
+  finalCalculation();
+  useEffect(() => {
+    finalCalculation();
+  },[finalCalculation, rows]);
   return (
     <TableContainer component={Paper}>
+      
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
