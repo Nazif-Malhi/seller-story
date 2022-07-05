@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ButtonR from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import {Button , Modal, Container, Row, Col} from 'react-bootstrap';
@@ -9,13 +9,25 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import  TextField  from '@mui/material/TextField';
-import { top100Films } from '../Data/Top100FilmsData';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import Axios from 'axios'
 export const AddExpenseCategoryModal = ({
     onHide,
     show
 }) => {
+
+  const [code, setCode] = useState('');
+  const [name, setName] = useState('');
+
+
+  const submitInfo = () => {
+    Axios.post("http://localhost:8000/expenseCategory/insert", {
+      code:code,
+      name:name
+    });
+    setCode('');
+    setName('');
+  }
   return (<>
   <div className='addmodal_div'>
       <Modal show={show} onHide={onHide}
@@ -32,12 +44,12 @@ export const AddExpenseCategoryModal = ({
             <Row>
               <Col xs={10} md={6}>
               <h6>Code *</h6>
-                <TextField id ="outlined-basics" label= "Product Code" variant='outlined' size='small'
+                <TextField id ="outlined-basics" label= "Code" variant='outlined' size='small'
                   InputProps={{
 
                     style :{
                       paddingRight: '0px',
-                      width:270
+                      width:'100%'
                     },
                     endAdornment: (
                       <InputAdornment position="end" >
@@ -48,11 +60,16 @@ export const AddExpenseCategoryModal = ({
                       </InputAdornment>
                     )
                   }}
+                  value = {code}
+                  onChange = {(e) => {setCode(e.target.value)}}
                   />
               </Col>
               <Col xs = {8} md = {6}>
                 <h6>Name *</h6>
-                <TextField type='number' id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:220}}/>
+                <TextField type='text' id="outlined-basic" label="Name" variant="outlined" size="small"
+                value = {name}
+                onChange = {(e) => {setName(e.target.value)}}
+                style = {{width:'100%'}}/>
               </Col>
               </Row>
          </Container>
@@ -62,7 +79,7 @@ export const AddExpenseCategoryModal = ({
           <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={onHide}>
+          <Button variant="primary" onClick={submitInfo}>
             Submit
           </Button>
         </Modal.Footer>
@@ -78,6 +95,32 @@ export const AddExpenseModal = ({
     show
 }) => {
     const [value, setValue] = useState(new Date());
+    const [category, setCategory] = useState([]);
+
+    const [catSelect, setCatSelect] = useState('');
+    const [amount, setAmount] = useState('');
+    const [des, setDes] = useState('');
+
+    useEffect(()=> {
+      Axios.get("http://localhost:8000/expenseCategory/read").then((response) => {
+        setCategory(response.data);
+      });
+    }, []);
+
+    const submitInfo = () => {
+      Axios.post("http://localhost:8000/expense/insert", {
+        date:value,
+        expenseCategory:catSelect,
+        amount:amount,
+        des:des
+      });
+      console.log(catSelect)
+      setValue(new Date());
+      setCatSelect('');
+      setAmount('');
+      setDes('');
+    }
+
   return (<>
   <div className='addmodal_div'>
       <Modal show={show} onHide={onHide}
@@ -98,55 +141,41 @@ export const AddExpenseModal = ({
               <DesktopDatePicker
                 label="For desktop"
                 value={value}
-
                 minDate={new Date('2017-01-01')}
                 onChange={(newValue) => {
                   setValue(newValue);
                 }}
-                renderInput={(params) => <TextField size='small' {...params} />}
+                renderInput={(params) => <TextField size='small' {...params} style={{width:'100%'}}/>}
               />
         </LocalizationProvider>
               </Col>
-              <Col xs = {8} md = {6}>
+              <Col xs = {10} md = {6}>
                 <h6>Expense Category *</h6>
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
-                  options={top100Films}
-                  sx={{ width: 220 }}
+                  value={catSelect}
+                  onInputChange={(e,val) => {setCatSelect(val)}}
+                  options={category.map((val) => {
+                    return(val.name);
+                })}
+                
+                  sx={{ width: '100%' }}
                   size = 'small'
-                  renderInput={(params) => <TextField {...params} label="Movie" />}
+                  renderInput={(params) => <TextField {...params} label="category"
+                 
+                  
+                  />}
                 />
               </Col>
               </Row>
               <Row>
-              <Col xs = {8} md = {6}>
-                <h6>Ware House *</h6>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  sx={{ width: 220 }}
-                  size = 'small'
-                  renderInput={(params) => <TextField {...params} label="Movie" />}
-                />
-              </Col>
-              <Col xs = {8} md = {6}>
-                <h6>Amount *</h6>
-              <TextField id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:220}}/>
-              </Col>
-              </Row>
-              <Row>
-              <Col xs = {8} md = {6}>
-                <h6>Account</h6>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  sx={{ width: 220 }}
-                  size = 'small'
-                  renderInput={(params) => <TextField {...params} label="Movie" />}
-                />
+              <h6>Amount *</h6>
+              <Col xs = {18} md = {12}>
+              <TextField type={'number'} id="outlined-basic" label="Amount" variant="outlined" size="small" style={{width:'100%'}}
+              value = {amount}
+              onChange = {(e) => {setAmount(e.target.value)}}/>
+
               </Col>
               </Row>
               <Row>
@@ -158,6 +187,8 @@ export const AddExpenseModal = ({
                   multiline
                   rows={4}
                   style = {{width:'100%'}}
+                  value = {des}
+                  onChange = {(e) => {setDes(e.target.value)}}
                 />
                 </Col>
               </Row>
@@ -168,7 +199,7 @@ export const AddExpenseModal = ({
           <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={onHide}>
+          <Button variant="primary" onClick={submitInfo}>
             Submit
           </Button>
         </Modal.Footer>
