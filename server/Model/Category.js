@@ -7,7 +7,7 @@ const categorySchema = new mongoose.Schema({
     },
     parentCategory:{
         type:String,
-        require:false,
+        require:true,
     },
     
 });

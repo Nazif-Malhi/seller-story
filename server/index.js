@@ -259,7 +259,7 @@ app.post('/purchase/insert', async (req, res) =>{
 
 
 app.get('/purchase/read', async(req, res) => {
-    PurchaseModal.find({},{date:1,supplier:1,purchaseStatus:1,orderTax:1,orderDiscount:1,shippingCost:1,grandTotal:1,__v:1},(err, result) => {
+    PurchaseModal.find({},{_id:1, date:1,supplier:1,purchaseStatus:1,orderTax:1,orderDiscount:1,shippingCost:1,grandTotal:1,__v:1},(err, result) => {
         if(err) {
             res.send(err);
         }
@@ -304,13 +304,85 @@ app.post('/qoutation/insert', async (req, res) =>{
 
 
 app.get('/qoutation/read', async(req, res) => {
-    QoutationModal.find({},{customer:1,supplier:1,orderTax:1,orderDiscount:1,shippingCost:1,grandTotal:1,__v:1},(err, result) => {
+    QoutationModal.find({},{_id:1,customer:1, supplier:1, orderTax:1, orderDiscount:1, shippingCost:1, grandTotal:1 , __v:1},(err, result) => {
         if(err) {
             res.send(err);
         }
         res.send(result);
     })
 })
+
+
+
+
+// Expense Category
+const ExpenseCategoryModal = require("./Model/ExpenseCategory");
+
+
+app.post('/expenseCategory/insert', async (req, res) =>{
+    const code = req.body.code
+    const name = req.body.name
+
+    const expenseCategory = new ExpenseCategoryModal({
+        code:code,
+        name:name,
+    });
+
+    try {
+        await expenseCategory.save();
+        res.send('inserted Data');
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+app.get('/expenseCategory/read', async(req, res) => {
+    ExpenseCategoryModal.find({},(err, result) => {
+        if(err) {
+            res.send(err);
+        }
+        res.send(result);
+    })
+})
+
+// Expense 
+const ExpenseModal = require("./Model/Expense");
+
+
+app.post('/expense/insert', async (req, res) =>{
+    const date = req.body.date
+    const expenseCategory = req.body.expenseCategory
+    const des = req.body.des
+    const amount = req.body.amount
+
+    const expense = new ExpenseModal({
+        date:date,
+        expenseCategory:expenseCategory,
+        amount:amount,
+        des:des
+    });
+
+    try {
+        await expense.save();
+        res.send('inserted Data');
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+app.get('/expense/read', async(req, res) => {
+    ExpenseModal.find({},(err, result) => {
+        if(err) {
+            res.send(err);
+        }
+        res.send(result);
+    })
+})
+
+
+
 
 // Running App
 app.listen(8000 , () => {

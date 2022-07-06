@@ -194,7 +194,7 @@ const submitInfo = () => {
                     />
                 </Col>
                 <Col>
-                <TextField type='text' id="outlined-basic" label="QTY" variant="outlined" size="small" style={{width:'100%'}} onChange={(e)=>{setQty(e.target.value)}} value={qty}/>
+                <TextField type='number' id="outlined-basic" label="QTY" variant="outlined" size="small" style={{width:'100%'}} onChange={(e)=>{setQty(e.target.value)}} value={qty}/>
                 </Col>
             </Row>
             <Row>

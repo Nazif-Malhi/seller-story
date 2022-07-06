@@ -185,13 +185,13 @@ const finalCalculation = () => {
                     labelId="demo-select-small"
                     id="demo-select-small"
                     label="product_type"
-                    onChange={(e, input) => setPurchaseStatus(input)} 
+                    onChange={(e) => {setPurchaseStatus(e.target.value)}} 
                     value = {purchaseStatus}
                     >
-                    <MenuItem value={0}>Received</MenuItem>
-                    <MenuItem value={1}>Partial</MenuItem>
-                    <MenuItem value={2}>Pending</MenuItem>
-                    <MenuItem value={3}>Ordered</MenuItem>
+                    <MenuItem value={'Received'}>Received</MenuItem>
+                    <MenuItem value={'Partial'}>Partial</MenuItem>
+                    <MenuItem value={'Pending'}>Pending</MenuItem>
+                    <MenuItem value={'Ordered'}>Ordered</MenuItem>
                     </Select>
                     </FormControl1>
                 </Col>
@@ -214,7 +214,7 @@ const finalCalculation = () => {
                     />
                 </Col>
                 <Col>
-                <TextField type='text' id="outlined-basic" label="QTY" variant="outlined" size="small" style={{width:'100%'}} onChange={(e)=>{setQty(e.target.value)}} value={qty}/>
+                <TextField type='number' id="outlined-basic" label="QTY" variant="outlined" size="small" style={{width:'100%'}} onChange={(e)=>{setQty(e.target.value)}} value={qty}/>
                 </Col>
             </Row>
             <Row>

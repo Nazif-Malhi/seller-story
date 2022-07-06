@@ -26,7 +26,13 @@ export const AddCategoryModal = ({
 
      const [name , setName] = useState();
      const [parentCategory, setParentCategory] = useState();
-   
+    const [dataCat, setDataCat] = useState([])
+     useEffect(()=> {
+      Axiox.get("http://localhost:8000/category/read").then((response) => {
+        setDataCat(response.data);
+      });
+    }, [show]);
+
     // Saving data in Database
 
     const submitInfo = () => {
@@ -34,6 +40,8 @@ export const AddCategoryModal = ({
       name:name,
       parentCategory:parentCategory,
     });
+    setName('');
+    setParentCategory('');
     }
 return (
     <div className='addmodal_div'>
@@ -57,19 +65,18 @@ return (
                     </Col>
                     <Col xs = {8} md = {6}>
                     <h6>Parent Category</h6>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={parentCategory}
-                          label="Age"
-                          onChange={(e) => setParentCategory(e.target.value)}
-                          size='small'
-                          style={{width:'100%'}}
-                        >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
+                    <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    value = {parentCategory}
+                    onInputChange={(e, newVal) => {setParentCategory(newVal)}}
+                    options={dataCat.map((val) => {
+                        return(val.name);
+                    })}
+                    size = 'small'                
+                    renderInput={(params) => <TextField {...params} label="Product" />}
+                    
+                    />
                     </Col>
                 </Row>
             </Container>
@@ -138,6 +145,22 @@ export const AddProductModal = ({
   setDescription('');
   }
 
+  const generateRandom = () => {
+    let min = 99999;
+    let max = 999999;
+    // find diff
+    let difference = max - min;
+
+    // generate random number 
+    let rand = Math.random();
+
+    // multiply with difference 
+    rand = Math.floor( rand * difference);
+
+    // add with min value 
+    rand = rand + min;
+    setProductCode(rand.toString())
+}
 
   return (<div className="add_product-Modal" >  
 
@@ -175,7 +198,7 @@ export const AddProductModal = ({
         </Col>
         <Col xs={6} md={4}>
           <h6>Product Code</h6>
-          <TextField id ="outlined-basics" label= "Product Code" variant='outlined' size='small' style={{width:'100%'}} onChange={(e) => setProductCode(e.target.value)} value = {productCode}
+          <TextField type='number' id ="outlined-basics" label= "Product Code" variant='outlined' size='small' style={{width:'100%'}} onChange={(e) => setProductCode(e.target.value)} value = {productCode}
             InputProps={{
 
               style :{
@@ -184,7 +207,8 @@ export const AddProductModal = ({
               endAdornment: (
                 <InputAdornment position="end" >
                   <ButtonR  variant="contained" endIcon={<MdOutlineAutorenew />}
-                    style = {{height: '38px', marginBottom:1}}>
+                    style = {{height: '38px', marginBottom:1}}
+                    onClick= {generateRandom}>
                   </ButtonR>
                 </InputAdornment>
               )
@@ -195,7 +219,7 @@ export const AddProductModal = ({
       <Row className='topSpace'>
       <Col xs={6} md={4}>
         <h6>Brand</h6>
-        <TextField id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setBrand(e.target.value)} value = {brand}/>
+        <TextField id="outlined-basic" label="brand name" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setBrand(e.target.value)} value = {brand}/>
 
         </Col>
         <Col xs={6} md={4}>
@@ -211,12 +235,11 @@ export const AddProductModal = ({
           size = 'small'                
           renderInput={(params) => <TextField {...params} label="Category" />}
           
-        />
-        <h6>{category}</h6>              
+        />         
         </Col>
         <Col xs={6} md={4}>
         <h6>Product Price*</h6>
-            <TextField type='number' id="outlined-basic" label="Product Name" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setPrice(e.target.value)} value = {price}/>
+            <TextField type='number' id="outlined-basic" label="price" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setPrice(e.target.value)} value = {price}/>
         </Col>
       </Row>
       <Row className='topSpace'>

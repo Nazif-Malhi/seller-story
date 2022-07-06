@@ -69,7 +69,7 @@ export const AddPeopleModal = ({
           <Row>
               <Col>
               <h6>Phone Number *</h6>
-              <TextField id="outlined-basic" label="Phone Number" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setPhone(e.target.value)} value={phone}/>
+              <TextField type = 'number' id="outlined-basic" label="Phone Number" variant="outlined" size="small" style={{width:'100%'}} onChange={(e) => setPhone(e.target.value)} value={phone}/>
               </Col>
               <Col>
               <h6>Address</h6>
