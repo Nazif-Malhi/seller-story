@@ -23,7 +23,7 @@ export const AddExpenseCategory = () => {
       Axios.get("http://localhost:8000/expenseCategory/read").then((response) => {
         setExpenseCat(response.data);
       });
-    }, []);
+    }, [showAddModal]);
 
     const columnsHeader = [
       'Code',
@@ -82,7 +82,7 @@ export const AddExpense = () => {
     Axios.get("http://localhost:8000/expense/read").then((response) => {
       setExpense(response.data);
     });
-  }, []);
+  }, [showAddModal]);
 
   const columnsHeader = [
     'Date',

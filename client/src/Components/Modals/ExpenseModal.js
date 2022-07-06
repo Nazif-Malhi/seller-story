@@ -28,6 +28,22 @@ export const AddExpenseCategoryModal = ({
     setCode('');
     setName('');
   }
+  const generateRandom = () => {
+    let min = 99999;
+    let max = 999999;
+    // find diff
+    let difference = max - min;
+
+    // generate random number 
+    let rand = Math.random();
+
+    // multiply with difference 
+    rand = Math.floor( rand * difference);
+
+    // add with min value 
+    rand = rand + min;
+    setCode(rand.toString())
+}
   return (<>
   <div className='addmodal_div'>
       <Modal show={show} onHide={onHide}
@@ -44,7 +60,7 @@ export const AddExpenseCategoryModal = ({
             <Row>
               <Col xs={10} md={6}>
               <h6>Code *</h6>
-                <TextField id ="outlined-basics" label= "Code" variant='outlined' size='small'
+                <TextField type = 'number' id ="outlined-basics" label= "Code" variant='outlined' size='small'
                   InputProps={{
 
                     style :{
@@ -54,7 +70,8 @@ export const AddExpenseCategoryModal = ({
                     endAdornment: (
                       <InputAdornment position="end" >
                         <ButtonR  variant="contained"
-                          style = {{height: '38px', marginBottom:1}}>
+                          style = {{height: '38px', marginBottom:1}}
+                          onClick = {generateRandom}>
                             Generate
                         </ButtonR>
                       </InputAdornment>

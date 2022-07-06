@@ -5,34 +5,10 @@ import {IoMdAdd} from 'react-icons/io';
 import {MdOutlineImportExport} from 'react-icons/md';
 import ImportingModals from '../Modals/ImportingModals';
 import { AddCategoryModal, AddProductModal } from '../Modals/InventoryModals';
-// import { columnsHeader , columnsHeaderProduct, rows, rowsProduct} from '../Data/TableData';
 import EnhanceTable from '../Table/EnhanceTable';
 import Axios from 'axios';
 
 
-
-// Data for Category
-
-function createData(category,	parentCategory,	numOfPro,	stockQuantity, worth) {
-  return { category,	parentCategory,	numOfPro,	stockQuantity, worth};
-}
-
- //const rows = [
-   // createData('Cupcake', 305, 3.7, 305, 3.7, 305),
-//   createData('Donut', 452, 25.0,305, 3.7, 3.7, 305, 3.7,305, 3.7),
-//   createData('Eclair', 262, 16.0,305, 305, 3.7, 305, 3.7,305, 3.7),
-//   createData('Frozen yoghurt', 159,305, 3.7, 305, 3.7, 305, 3.7,305, 3.7),
-//   createData('Gingerbread', 356, 16.0,305, 3.7, 305, 3.7, 305, 3.7,305),
-//   createData('Honeycomb', 408, 3.2,305, 3.7, 305, 3.7, 305, 3.7, 3.7),
-//   createData('Ice cream sandwich', 237, 9.0,305, 3.7,305, 305, 3.7, 305, 3.7),
-//   createData('Jelly Bean', 375, 0.0,305, 3.7, 305, 305, 3.7, 305, 3.7),
-//   createData('KitKat', 518, 26.0, 305, 3.7, 3.7, 305, 3.7, 305, 3.7),
-//   createData('Lollipop', 392, 0.2,305, 305, 3.7, 305, 3.7, 305, 3.7),
-//   createData('Marshmallow', 318, 0 , 3.7, 305, 3.7, 305, 3.7, 305, 3.7),
-//   createData('Nougat', 360, 19.0, 3.7, 305, 3.7, 305, 3.7, 305, 3.7),
-//   createData('Oreo', 437, 18.0,305, 3.7, 3.7, 305, 3.7, 305, 3.7),
- //]
-// .sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
 
 // Category 
@@ -50,7 +26,7 @@ export const Category = () => {
       Axios.get("http://localhost:8000/category/read").then((response) => {
         setRows(response.data);
       });
-    }, []);
+    }, [showAddModal]);
 
     
 
@@ -120,7 +96,7 @@ export const Product = () => {
       Axios.get("http://localhost:8000/product/read").then((response) => {
         setRows(response.data);
       });
-    }, []);
+    }, [showAddModal]);
     
 
     function hideModalImport(){
