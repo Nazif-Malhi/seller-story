@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Card, Button, Container, Col, Row} from 'react-bootstrap';
 import Autocomplete from '@mui/material/Autocomplete';
 import  TextField  from '@mui/material/TextField';
-import { InputLabel, MenuItem, Select } from '@mui/material';
-import FormControl1 from '@mui/material/FormControl';
 import FormsTable from '../Table/FormsTable';
 import Axios from 'axios';
 
@@ -21,7 +19,7 @@ const styleOfRight = {
 
 const QuotationForm = () => {
     const [customer , setCustomer] = useState([]);
-    const [customerName , setCustomerName] = useState([]);
+    const [customerName , setCustomerName] = useState('');
     
     const [rows, setRows] = useState([]);
     const [name, setName] = useState('');
@@ -29,7 +27,6 @@ const QuotationForm = () => {
     const [product, setProduct] = useState([]);
     const [supplier , setSupplier] = useState([]);
     const [supplierName, setSupplierName]= useState('');
-    const [purchaseStatus, setPurchaseStatus] = useState('');
     const [orderTax, setOrderTax]= useState(0.000);
     const [orderDiscount, setOrderDiscount]= useState(0.000);
     const [shippingCost, setShippingCost]= useState(0.000);

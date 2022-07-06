@@ -33,32 +33,18 @@ function subtotal(items) {
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-const rows = [
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-];
 
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+// const invoiceSubtotal = subtotal(rows);
+// const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+// const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
-export default function OrderTable() {
+const OrderTable=({rows,deleteTableRows})=>{
   return (
-    <TableContainer component={Paper} style={{height:'80vh'}}>
+    <TableContainer component={Paper} style={{height:'48vh'}}>
       <Table aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={3}>
+            <TableCell align="center" colSpan={2}>
               <h6><b>Details</b></h6>
             </TableCell>
             <TableCell align="right"><h6><b>Price</b></h6></TableCell>
@@ -67,38 +53,37 @@ export default function OrderTable() {
           <TableRow>
             <TableCell><b>Desc</b></TableCell>
             <TableCell align="right"><b>Qty.</b></TableCell>
-            <TableCell align="right"><b>Unit</b></TableCell>
             <TableCell align="right"><b>Sum</b></TableCell>
             <TableCell align="center"><b>Delete</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
+        {rows.map((row,index) => (
+            <TableRow key={row.name}>
+              <TableCell>{row.name}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-              <TableCell align="center">{<AiFillCloseSquare style={style}/>}</TableCell>
+              <TableCell align="right"><AiFillCloseSquare style={style} onClick={()=>(deleteTableRows(index))}/></TableCell>
+
             </TableRow>
           ))}
-
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            {/* <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell> */}
           </TableRow>
           <TableRow>
             <TableCell>Tax</TableCell>
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            {/* <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell> */}
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            {/* <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell> */}
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
+export default OrderTable

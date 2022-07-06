@@ -9,7 +9,7 @@ import { AddExpense, AddExpenseCategory } from "./Components/Pages/Expense";
 import { AddQuotation, QuotationList } from "./Components/Pages/Quotation";
 import { ReturnPurchase, ReturnSale } from "./Components/Pages/Return";
 import { Customer, Supplier } from "./Components/Pages/People";
-import Pos from "./Components/Modals/Pos";
+import Pos from "./Components/Modals/NewPos";
 import AppContainer from "./Components/SignInSingUp/AppContainer";
 
 function App() {
