@@ -163,7 +163,7 @@ const StyledMenu = styled((props) => (
     },
   },
 }));
-function CustomizedMenus() {
+function CustomizedMenus(id) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -172,6 +172,9 @@ function CustomizedMenus() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const update = (id) => {
+
+  }
 
   return (
     <div>
@@ -197,13 +200,13 @@ function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={update(id)} disableRipple>
           <MdOutlineModeEditOutline style={{marginRight:'10px'}}/>
           Edit
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <MdDelete style={{marginRight:'10px'}}/>
-          Duplicate
+          Delete
         </MenuItem>
       </StyledMenu>
     </div>

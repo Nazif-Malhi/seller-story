@@ -123,6 +123,11 @@ export const AddProductModal = ({
   }, []);
 
   const submitInfo = () => {
+    if(productType === 'Standard' || 'Services'){
+      if(!productName === ""  || !productCode){
+
+      }
+    }
     Axiox.post("http://localhost:8000/product/insert",{
       productType:productType,
       productName:productName,

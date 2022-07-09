@@ -1,4 +1,4 @@
-import * as React from 'react';
+import react,{useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -39,6 +39,15 @@ function subtotal(items) {
 // const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 const OrderTable=({rows,deleteTableRows})=>{
+  const [total, setTotal] = useState(0);
+  const getTotal = () => {
+    let temp =0;
+    rows.map((val) => {
+      temp += parseInt(val.price)*parseInt(val.qty);
+    })
+    setTotal(temp)
+    return temp;
+  }
   return (
     <TableContainer component={Paper} style={{height:'48vh'}}>
       <Table aria-label="spanning table">
@@ -59,28 +68,27 @@ const OrderTable=({rows,deleteTableRows})=>{
         </TableHead>
         <TableBody>
         {rows.map((row,index) => (
+            
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
               <TableCell align="right"><AiFillCloseSquare style={style} onClick={()=>(deleteTableRows(index))}/></TableCell>
-
+             
             </TableRow>
-          ))}
-          <TableRow>
+          ))
+          }
+          {/* <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            {/* <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell> */}
+           
+            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Tax</TableCell>
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-            {/* <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell> */}
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            {/* <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell> */}
-          </TableRow>
+            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+          </TableRow> */}
         </TableBody>
       </Table>
     </TableContainer>
