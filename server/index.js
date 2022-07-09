@@ -41,17 +41,54 @@ app.post('/insert', async (req, res) =>{
         console.log(error);
     }
 })
+app.put('/update', async (req, res) =>{
+    const name = req.body.name;
+    const companyName = req.body.companyName;
+    const password = req.body.password;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const id = req.body.id;
+    console.log(id)
 
-
-app.get('/read', async(req, res) => {
-    AuthenticationModel.find({}, (err, result) => {
-        if(err) {
-            res.send(err);
-        }
-        res.send(result);
-    })
+    try {
+       await AuthenticationModel.findById(id, (err, update) => {
+            update.name = name;
+            update.companyName = companyName;
+            update.password = password;
+            update.email = email;
+            update.phone = phone;
+            update.save();
+            res.send("update");
+        })
+    } catch (error) {
+        console.log(error);
+    }
 })
 
+app.get('/read', async(req, res) => {
+    try{
+         AuthenticationModel.find({}, (err, result) => {
+            if(err) {
+                res.send(err);
+            }
+            res.send(result);
+        })
+    }catch(error){
+        console.log(error)
+    }
+})
+
+app.delete("/delete/:id",async (req, res)=> {
+    const id= req.params.id;
+    try{
+        await AuthenticationModel.findByIdAndRemove(id).exec();
+        res.send("deleted");
+    }
+    catch(error){
+        console.log(error);
+    }
+ })
+ 
 
 // Category 
 const CategoryModel = require("./Model/Category");
@@ -370,7 +407,25 @@ app.post('/expense/insert', async (req, res) =>{
         console.log(error);
     }
 })
+app.put('/expense/update', async (req, res) =>{
+    const date = req.body.date
+    const expenseCategory = req.body.expenseCategory
+    const des = req.body.des
+    const amount = req.body.amount
+    const id = req.body.id;
 
+    try {
+        ExpenseModal.findById(id, (update) => {
+            update.date = date
+            update.expenseCategory = expenseCategory
+            update.des = des
+            update.amount = amount
+            update.save();
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 app.get('/expense/read', async(req, res) => {
     ExpenseModal.find({},(err, result) => {

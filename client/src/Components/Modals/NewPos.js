@@ -58,6 +58,7 @@ useEffect(()=> {
             price:tempSubTotal,
         }
         setRows([...rows,rowsInput]);
+        
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,7 @@
 //Impoorting Libraries
 
 import React, { useContext , useEffect , useState} from "react";
+import { profile } from "../../Global";
 import {
   BoldLink,
   BoxContainer,
@@ -37,8 +38,13 @@ export function LoginForm({handleRoute}) {
     let tempPassword = '';
     try {
       tempPassword=authentication.find(x => x.name === name).password;
+      
+      
       if(tempPassword !== ''){
         if(tempPassword === password){
+          let id = authentication.find(x => x.name === name)._id;
+          profile.id = id;
+          console.log(profile.id);
           navigate('/dashboard');
           handleRoute();
           setError('');

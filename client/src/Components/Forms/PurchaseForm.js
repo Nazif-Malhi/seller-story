@@ -50,6 +50,7 @@ const PurchaseForm = () => {
        // Saving data in Database
 
     const submitInfo = () => {
+       
         Axios.post("http://localhost:8000/purchase/insert",{
         value:value,
         supplierName:supplierName,
